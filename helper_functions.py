@@ -1,4 +1,8 @@
-def classifier_report(name, run, classify, input, labels):
+from sklearn.metrics import recall_score, precision_score, confusion_matrix
+import random
+from qiskit import QuantumCircuit, transpile
+
+def classifier_report(name, run, classify, input, labels):    
     """An reusable function to unmask the hypocrite classifier"""
     
     cr_predictions = run(classify, input)
@@ -54,14 +58,11 @@ def load_data_from_csv():
     train = pd.read_csv('../data/train.csv')
     test = pd.read_csv('../data/test.csv')
 
-def pqc_classify(backend, passenger_state):
-    
-    from sklearn.metrics import recall_score, precision_score, confusion_matrix
+def pqc_classify(backend, passenger_state):  
     """
     backend - a qiskit backend to run the quantum circuit at
     passanger_state - a valid quantum state vector
     """
-
     # Create a quantum circuit with one qbit and one classical bit
     qc = QuantumCircuit(1,1)
 
@@ -84,3 +85,11 @@ def pqc_classify(backend, passenger_state):
     # Get the bit 0 or 1
     return int(list(counts.keys())[0])
 
+def run(f_classify, x):
+    """Runs classifier"""
+    return list(map(f_classify, x))
+
+def classify(passenger):
+    """Baseline model, random classifier"""    
+    random.seed(a=None, version=2)
+    return random.randint(0, 1)

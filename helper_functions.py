@@ -2,7 +2,7 @@ from sklearn.metrics import recall_score, precision_score, confusion_matrix
 import random
 from qiskit import QuantumCircuit, transpile
 
-def classifier_report(name, run, classify, input, labels):    
+def classifier_report(name, run, classify, input, labels,confusion_matrix, precision_score, recall_score):    
     """An reusable function to unmask the hypocrite classifier"""
     
     cr_predictions = run(classify, input)

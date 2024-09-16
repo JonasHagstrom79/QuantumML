@@ -93,3 +93,12 @@ def classify(passenger):
     """Baseline model, random classifier"""    
     random.seed(a=None, version=2)
     return random.randint(0, 1)
+
+def weigh_feature(feature, weight):
+    """
+    feature -- the single value of a passenger's feature
+    weight -- the overall weight of this feature
+    returns the weighted feature
+    """
+    return feature*weight
+

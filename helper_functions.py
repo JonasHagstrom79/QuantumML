@@ -1,6 +1,7 @@
 from sklearn.metrics import recall_score, precision_score, confusion_matrix
 import random
 from qiskit import QuantumCircuit, transpile
+from functools import reduce
 
 def classifier_report(name, run, classify, input, labels,confusion_matrix, precision_score, recall_score):    
     """An reusable function to unmask the hypocrite classifier"""
@@ -101,4 +102,15 @@ def weigh_feature(feature, weight):
     returns the weighted feature
     """
     return feature*weight
+
+def get_overall_probability(features, weights):
+    """
+    features -- list of the features of a passenger
+    weights -- list of all features weights
+    """
+    return reduce(
+    lambda result, data: result + weigh_feature(*data),
+    zip(features, weights),
+    0
+    )
 

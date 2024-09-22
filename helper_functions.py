@@ -114,3 +114,45 @@ def get_overall_probability(features, weights):
     0
     )
 
+def pre_process(passenger):
+    """
+    passenger -- the normalized (array of numeric data) passenger data
+    returns a valid quantum state
+    """
+    quuantum_state = [1/sqrt(2), 1/sqrt(2)]
+    return quantum_state
+
+def pqc(backend, quantum_state):
+    """
+    backend −− a qiskit backend to run the quantum circuit at
+    quantum_state −− a valid quantum state vector
+    returns the counts of the measurement
+    """
+
+    # Create a quantum circuit with one qubit
+    qc = QuantumCircuit(1)
+
+    # Define state |Psi> and initialize the circuit
+    qc.initialize(quantum_state, 0)
+
+    # Measure the qubit
+    qc.measure_all()
+
+    # run the quantum circuit
+    result=execute(qc,backend).result()
+
+    # get the counts, these are either {'0': 1} or {'1': 1}
+    counts=result.get_counts(qc)
+    
+    return counts
+
+def post_process(counts):
+    """
+    counts −− the result of the quantum circuit execution
+    returns the prediction
+    """
+    return int(list(map(lambda item: item[0], counts.items()))[0])
+
+
+
+

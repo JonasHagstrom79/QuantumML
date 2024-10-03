@@ -1,9 +1,9 @@
 from sklearn.metrics import recall_score, precision_score, confusion_matrix
 import random
-from qiskit import QuantumCircuit, transpile
+from qiskit import QuantumCircuit, transpile #, execute
 from functools import reduce
 
-def classifier_report(name, run, classify, input, labels,confusion_matrix, precision_score, recall_score):    
+def classifier_report(name, run, classify, input, labels):    
     """An reusable function to unmask the hypocrite classifier"""
     
     cr_predictions = run(classify, input)
@@ -138,12 +138,16 @@ def pqc(backend, quantum_state):
     # Measure the qubit
     qc.measure_all()
 
-    # run the quantum circuit
-    result=execute(qc,backend).result()
+    # Transpile the circuit for the backend
+    qc_transpiled = transpile(qc, backend)
 
-    # get the counts, these are either {'0': 1} or {'1': 1}
-    counts=result.get_counts(qc)
-    
+    # Run the quantum circuit
+    job = backend.run(qc_transpiled, shots=1)
+    result = job.result()
+
+    # Get the counts, these are either {'0': 1} or {'1': 1}
+    counts = result.get_counts(qc_transpiled)
+   
     return counts
 
 def post_process(counts):
@@ -152,7 +156,3 @@ def post_process(counts):
     returns the prediction
     """
     return int(list(map(lambda item: item[0], counts.items()))[0])
-
-
-
-

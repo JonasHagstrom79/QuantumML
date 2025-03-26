@@ -122,7 +122,7 @@ def pre_process(passenger):
     quuantum_state = [1/sqrt(2), 1/sqrt(2)]
     return quantum_state
 
-def pqc(backend, quantum_state):
+def pqcOLD(backend, quantum_state):
     """
     backend −− a qiskit backend to run the quantum circuit at
     quantum_state −− a valid quantum state vector
@@ -148,6 +148,16 @@ def pqc(backend, quantum_state):
     # Get the counts, these are either {'0': 1} or {'1': 1}
     counts = result.get_counts(qc_transpiled)
    
+    return counts
+
+def pqc(backend, quantum_state):
+    """Runs the parameterized quantum circuit."""
+    qc = quantum_state  # Assuming quantum_state is already a QuantumCircuit
+    qc.measure_all()
+    transpiled_qc = transpile(qc, backend)
+    job = backend.run(transpiled_qc, shots=1) # shots=1 för att få ett binärt resultat
+    result = job.result()
+    counts = result.get_counts(qc)
     return counts
 
 def post_process(counts):

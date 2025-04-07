@@ -1,6 +1,12 @@
 from sklearn.metrics import recall_score, precision_score, confusion_matrix
 import random
+<<<<<<< HEAD
 from qiskit import QuantumCircuit, transpile #, execute
+=======
+from qiskit import QuantumCircuit, transpile, AerSimulator  #, execute
+from qiskit.providers.aer import AerSimulator
+from qiskit.result import Result
+>>>>>>> 754e8e5 (intial push from new VM)
 from functools import reduce
 
 def classifier_report(name, run, classify, input, labels):    
@@ -155,6 +161,10 @@ def pqc(backend, quantum_state):
     qc = quantum_state  # Assuming quantum_state is already a QuantumCircuit
     qc.measure_all()
     transpiled_qc = transpile(qc, backend)
+<<<<<<< HEAD
+=======
+    print(type(transpiled_qc))
+>>>>>>> 754e8e5 (intial push from new VM)
     job = backend.run(transpiled_qc, shots=1) # shots=1 för att få ett binärt resultat
     result = job.result()
     counts = result.get_counts(qc)

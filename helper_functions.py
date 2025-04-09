@@ -1,3 +1,5 @@
+import numpy as np
+from qiskit.quantum_info import Statevector
 from sklearn.metrics import recall_score, precision_score, confusion_matrix
 import random
 from qiskit import QuantumCircuit, transpile #, execute
@@ -122,7 +124,7 @@ def pre_process(passenger):
     passenger -- the normalized (array of numeric data) passenger data
     returns a valid quantum state
     """
-    quuantum_state = [1/sqrt(2), 1/sqrt(2)]
+    quantum_state = Statevector([1/np.sqrt(2), 1/np.sqrt(2)])  # Korrekt stavning och Statevector
     return quantum_state
 
 def pqcOLD(backend, quantum_state):
@@ -155,16 +157,14 @@ def pqcOLD(backend, quantum_state):
 
 def pqc(backend, quantum_state):
     """Runs the parameterized quantum circuit."""
-    qc = quantum_state  # Assuming quantum_state is already a QuantumCircuit
+    qc = QuantumCircuit(1) # Skapa en ny krets
+    qc.initialize(quantum_state, 0) # Applicera tillståndet
     qc.measure_all()
     transpiled_qc = transpile(qc, backend)
-<<<<<<< HEAD
-=======
     print(type(transpiled_qc))
->>>>>>> 754e8e5 (intial push from new VM)
-    job = backend.run(transpiled_qc, shots=1) # shots=1 för att få ett binärt resultat
+    job = backend.run(transpiled_qc, shots=1)
     result = job.result()
-    counts = result.get_counts(qc)
+    counts = result.get_counts(transpiled_qc) # Använd transpiled_qc här
     return counts
 
 def post_process(counts):

@@ -1,9 +1,12 @@
 from sklearn.metrics import recall_score, precision_score, confusion_matrix
 import random
+<<<<<<< HEAD
 from qiskit import QuantumCircuit, transpile #, execute
+=======
 from qiskit import QuantumCircuit, transpile, AerSimulator  #, execute
 from qiskit.providers.aer import AerSimulator
 from qiskit.result import Result
+>>>>>>> 754e8e5 (intial push from new VM)
 from functools import reduce
 
 def classifier_report(name, run, classify, input, labels):    

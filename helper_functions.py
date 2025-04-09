@@ -3,7 +3,6 @@ from qiskit.quantum_info import Statevector
 from sklearn.metrics import recall_score, precision_score, confusion_matrix
 import random
 from qiskit import QuantumCircuit, transpile #, execute
-from qiskit import QuantumCircuit, transpile, AerSimulator  #, execute
 from qiskit.providers.aer import AerSimulator
 from qiskit.result import Result
 from functools import reduce
